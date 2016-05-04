@@ -1,0 +1,20 @@
+{
+  "name": "nightlifefcc",
+  "version": "1.0.0",
+  "description": "coordinate your nightlife",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KokoChris/NightlifeFCC.git"
+  },
+  "author": "kokoc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KokoChris/NightlifeFCC/issues"
+  },
+  "homepage": "https://github.com/KokoChris/NightlifeFCC#readme"
+}

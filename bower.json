@@ -1,0 +1,22 @@
+{
+  "name": "NightlifeFCC",
+  "homepage": "https://github.com/KokoChris/NightlifeFCC",
+  "authors": [
+    "kokoc"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
