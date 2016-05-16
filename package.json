@@ -1,20 +1,48 @@
 {
-  "name": "nightlifefcc",
+  "name": "voteapp",
   "version": "1.0.0",
-  "description": "coordinate your nightlife",
+  "description": "voting app",
   "main": "app.js",
   "scripts": {
+    "test": "mocha test.js",
     "start": "node app.js"
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KokoChris/NightlifeFCC.git"
+    "url": "git+https://github.com/KokoChris/VoteApp.git"
   },
   "author": "kokoc",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KokoChris/NightlifeFCC/issues"
+    "url": "https://github.com/KokoChris/VoteApp/issues"
   },
-  "homepage": "https://github.com/KokoChris/NightlifeFCC#readme"
+  "homepage": "https://github.com/KokoChris/VoteApp#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.4.12",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-if": "^2.0.0",
+    "gulp-inject": "^4.0.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-load-plugins": "^1.2.2",
+    "gulp-print": "^2.0.1",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0",
+    "mocha": "^2.4.5",
+    "should": "^8.3.1",
+    "supertest": "^1.2.0",
+    "wiredep": "^4.0.0",
+    "yargs": "^4.6.0"
+  }
 }
