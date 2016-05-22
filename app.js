@@ -25,8 +25,8 @@ var options = {
         v: 20130815,
         near: 'Athens',
         query: 'bar',
-        limit: 10 ,
-        venuePhotos:1
+        limit: 10,
+        venuePhotos: 1
     }
 }
 
@@ -48,11 +48,29 @@ app.post('/bars', function(req, res) {
         if (!error && response.statusCode === 200) {
 
             var parsedBody = JSON.parse(body);
-            
+
             var venues = parsedBody.response.groups[0].items;
-           
-            // res.json(venues);
+
             res.render('bars/index', { venues: venues, location: capitalize(req.body.location) });
+        } else {
+
+
+            res.send('Something went wrong');
+        }
+    });
+})
+
+app.get('/api/bars', function(req, res) {
+
+    request(options, function(error, response, body) {
+
+        if (!error && response.statusCode === 200) {
+
+            var parsedBody = JSON.parse(body);
+
+            var venues = parsedBody.response.groups[0].items;
+
+            res.json(venues);
         } else {
 
 
