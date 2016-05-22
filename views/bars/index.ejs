@@ -24,10 +24,12 @@
 		<div class="col-md-6 col-md-offset-3">
 				<ul class="event-list">
 					<% venues.forEach(function(venue) { %>
-							<% var photo = venue.venue.photos.groups[0].items[0] %>
-							<% var prefix = photo.prefix; %>
-							<% var suffix = photo.suffix; %>
-							<% var photoUrl = prefix+'250x250'+suffix; %>
+							<% if (venue.venue.photos.groups[0]) { %>
+								<% var photo = venue.venue.photos.groups[0].items[0] %>
+								<% var prefix = photo.prefix; %>
+								<% var suffix = photo.suffix; %>
+								<% var photoUrl = prefix+'250x250'+suffix; %>
+							<% } %>
 					<li>
 						<time datetime="2014-07-20">
 							<img src="<%-photoUrl%>"height="100%" width="100%">
