@@ -80,6 +80,14 @@ app.get('/api/bars', function(req, res) {
 })
 
 
+app.get('/api/oauth',function(req,res){
+    request('https://foursquare.com/oauth2/authenticate?client_id='+client_id+'&response_type=code&redirect_uri=http://https://fccnightout.herokuapp.com/',function(error,response,body) {
+        console.log(body);
+        res.render(body)
+    })
+})
+
+
 function capitalize(word) {
     return word[0].toUpperCase() + word.slice(1);
 }
