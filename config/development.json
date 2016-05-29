@@ -1,0 +1,12 @@
+{
+    "host": "http:/localhost:3000",
+    "dbURI": "mongodb://localhost/nightlife",
+    "sessionSecret": "smartass",
+    "foursquare": {
+        "clientID": "3RFULQTUSF5EOKZFGFRF2WNCC5LBUJW2D55HIVROUAYZXNB5",
+        "clientSecret": "KN3RBJGKKAGZITCWN3R1UV2QL43JJ1AONKBF2YH5XGEDMAZG",
+        "callbackURL": "http://localhost:3000/auth/foursquare/callback",
+        "profileFields": ["id","displayName","photos"]
+
+    }
+}
