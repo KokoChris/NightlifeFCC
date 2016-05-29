@@ -4,8 +4,7 @@ const passport = require('passport');
 
 
 router.get('/logout', (req, res, next) => {
-    req.logout();
-    res.redirect('/');
+     res.redirect('/');
 })
 
 router.get('/foursquare',
@@ -15,7 +14,7 @@ router.get('/foursquare/callback',
     passport.authenticate('foursquare', { failureRedirect: '/' }),
     function(req, res) {
         // Successful authentication, redirect home.
-        res.redirect('back');
+        res.redirect('/');
     })
 
 module.exports = router;

@@ -7,9 +7,10 @@ const port = process.env.PORT || 3000;
 const passport = require('passport');
 const barRoutes = require('./routes/bars');
 const authRoutes = require('./routes/auth');
+require('./auth')();
+
 const session = require('./session');
 
-require('./auth')();
 app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'));
@@ -26,8 +27,7 @@ app.use(passport.session());
 
 
 app.use(function(req, res, next) {
-	console.log(req.session)
-	console.log(res.locals);
+	console.log(req.user);
     res.locals.user= req.user;
     next();
 });
@@ -35,7 +35,7 @@ app.use('/bars', barRoutes);
 app.use('/auth', authRoutes);
 
 app.get('/', function(req, res) {
-    console.log(req.user)
+   
     res.render('landing', { user: req.user })
 });
 app.listen(port, () => {
