@@ -20,17 +20,15 @@ let options = {
 }
 
 
-router.post('/', function(req, res) {
-    options.qs.near = req.body.location;
+router.get('/', function(req, res) {
+
+    options.qs.near = req.query.location;
     request(options, function(error, response, body) {
 
         if (!error && response.statusCode === 200) {
-
-            var parsedBody = JSON.parse(body);
-
-            var venues = parsedBody.response.groups[0].items;
-
-            res.render('bars/index', { venues: venues, location: capitalize(req.body.location) });
+            let parsedBody = JSON.parse(body);
+            let venues = parsedBody.response.groups[0].items;
+            res.render('bars/index', { venues: venues, location: capitalize(req.query.location) });
         } else {
 
 
@@ -40,13 +38,12 @@ router.post('/', function(req, res) {
 })
 
 router.get('/api/bars', function(req, res) {
-
+    options.qs.near = req.query.location;
     request(options, function(error, response, body) {
 
         if (!error && response.statusCode === 200) {
 
             let parsedBody = JSON.parse(body);
-
             let venues = parsedBody.response.groups[0].items;
             res.json(venues);
         } else {

@@ -8,7 +8,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-4">
-			<form class="form-inline" action="/bars" method="POST">
+			<form class="form-inline" action="/bars" method="GET">
   				<div class="form-group">
     				<input type="text" class="form-control" name="location" placeholder="e.g Athens">
     				<button type="submit" class="btn btn-success">Search Again</button>
@@ -43,6 +43,7 @@
 							<% } %>
 							<% var cords = venue.venue.location.lat + "," + venue.venue.location.lng %>
 							<a  class="btn btn-primary" href='https://www.google.com/maps/@<%- cords %>'>Find it on the Map</a>
+							<a  class="btn btn-warning" href="#">Test Checkin</a>
 						</div>
 					</li>
 					<% }) %>
