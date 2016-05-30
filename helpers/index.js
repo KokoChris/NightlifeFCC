@@ -8,13 +8,14 @@ let findOne = profileId => {
     })
 }
 
-let createNewUser = profile => {
+let createNewUser = (profile,accessToken) => {
     return new Promise((resolve, reject) => {
         console.log(profile)
         let newChatUser = new db.userModel({
             profileId: profile.id,
             fullName: profile.name.givenName,
-            profilePic: ""
+            profilePic: "",
+            token: accessToken
         });
 
         newChatUser.save(error => {

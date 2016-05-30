@@ -18,12 +18,14 @@ module.exports = function() {
 
 
     let authProcessor = function(accessToken, refreshToken, profile, done) {
+
         h.findOne(profile.id)
             .then(function(result) {
                 if (result) {
                     done(null, result);
                 } else {
-                    h.createNewUser(profile)
+                    console.log(accessToken)
+                    h.createNewUser(profile,accessToken)
                         .then(newChatUser => done(null, newChatUser))
                         .catch(error => console.log(error));
                 }

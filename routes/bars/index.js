@@ -21,10 +21,10 @@ let options = {
 
 
 router.get('/', function(req, res) {
-    
+
     options.qs.near = req.query.location;
     req.session.location = req.query.location;
-    console.log(req.session.location)
+    
     request(options, function(error, response, body) {
 
         if (!error && response.statusCode === 200) {
@@ -55,7 +55,28 @@ router.get('/api/bars', function(req, res) {
 })
 
 
+router.get('/checkin', (req, res) => {
+    let checkinOptions = {
+        url: 'https://api.foursquare.com/v2/venues/4b3a4ffff964a5205f6425e3/like',
+        qs: {
+           
+            oauth_token:req.user.token,
 
+            v: Date.now()
+        },
+        method: "POST"
+    }
+    request(checkinOptions, (error,response,body) => {
+        if (!error && response.statusCode === 200 ) {
+
+            res.redirect("/bars?location="+ req.session.location)
+        } else {
+            console.log(JSON.parse(body));
+            res.send(error);
+        }
+    })
+
+})
 
 function capitalize(word) {
     return word[0].toUpperCase() + word.slice(1);

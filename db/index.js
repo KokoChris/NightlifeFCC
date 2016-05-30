@@ -10,13 +10,14 @@ Mongoose.connection.on('error', function(error) {
 var chatUser = new Mongoose.Schema({
     profileId: String,
     fullName: String,
-    profilePic: String
+    profilePic: String,
+    token: String
 });
 
 var userModel = Mongoose.model('chatUser', chatUser);
 
 
 module.exports = {
-    Mongoose, 
-    userModel 
+    Mongoose,
+    userModel
 };
