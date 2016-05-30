@@ -21,8 +21,10 @@ let options = {
 
 
 router.get('/', function(req, res) {
-
+    
     options.qs.near = req.query.location;
+    req.session.location = req.query.location;
+    console.log(req.session.location)
     request(options, function(error, response, body) {
 
         if (!error && response.statusCode === 200) {
@@ -31,7 +33,7 @@ router.get('/', function(req, res) {
             res.render('bars/index', { venues: venues, location: capitalize(req.query.location) });
         } else {
 
-
+            console.log(error);
             res.send('Something went wrong');
         }
     });
