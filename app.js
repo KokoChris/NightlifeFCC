@@ -22,8 +22,7 @@ app.use(passport.session());
 require('./auth')();
 
 
-app.use(function(req, res, next) {
-    console.log(req.user);
+app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 });
