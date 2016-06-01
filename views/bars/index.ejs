@@ -24,27 +24,26 @@
 		<div class="col-md-6 col-md-offset-3">
 				<ul class="event-list">
 					<% venues.forEach(function(venue) { %>
-							<% if (venue.venue.photos.groups[0]) { %>
-								<% var photo = venue.venue.photos.groups[0].items[0] %>
+							<% if (venue.response.venue.photos.groups[0]) { %>
+								<% var photo = venue.response.venue.photos.groups[0].items[0] %>
 								<% var prefix = photo.prefix; %>
 								<% var suffix = photo.suffix; %>
 								<% var photoUrl = prefix+'250x250'+suffix; %>
-							<% } %>
+							<% } %>  
 					<li>
 						<time datetime="2014-07-20">
 							<a href="http://www.google.com"><img src="<%-photoUrl%>" alt='' height="100%" width="100%"></a>
 						</time>						
 						<div class="info">
-							<h2 class="title"><%-venue.venue.name%></h2>
+							<h2 class="title"><%-venue.response.venue.name%></h2>
 
-							<p class="desc"><%-venue.venue.location.address%></p>
-							<% if(venue.venue.url) { %>
-								<a class="btn btn-default" href="<%-venue.venue.url %>">Visit Venue HomePage</a>
-							<% } %>
-							<% var cords = venue.venue.location.lat + "," + venue.venue.location.lng %>
+							<p class="desc"><%-venue.response.venue.location.address%></p>
+							<% var cords = venue.response.venue.location.lat + "," + venue.response.venue.location.lng %>
 							<a  class="btn btn-primary" href='https://www.google.com/maps/@<%- cords %>'>Find it on the Map</a>
 							<a  class="btn btn-warning" href="/bars/checkin">Test Checkin</a>
-							<p>Here now <%-venue.venue.hereNow.count%> </p>
+							<!-- <p>Here now <%- venue.response.venue.hereNow.count%> </p> -->
+							<p>Checkins <%- venue.response.venue.likes.count%> </p>
+
 						</div>
 					</li>
 					<% }) %>

@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000;
 const passport = require('passport');
 const barRoutes = require('./routes/bars');
 const authRoutes = require('./routes/auth');
+const apiRoutes = require('./routes/api');
 
 const session = require('./session');
 
@@ -15,11 +16,12 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+require('./auth')();
+
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./auth')();
 
 
 app.use((req, res, next) => {
@@ -32,6 +34,7 @@ app.use((req, res, next) => {
 
 app.use('/bars', barRoutes);
 app.use('/auth', authRoutes);
+app.use('/api',apiRoutes);
 
 app.get('/', function(req, res) {
      
