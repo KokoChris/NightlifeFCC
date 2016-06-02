@@ -25,10 +25,12 @@
 				<ul class="event-list">
 					<% venues.forEach(function(venue) { %>
 							<% if (venue.response.venue.photos.groups[0]) { %>
+
 								<% var photo = venue.response.venue.photos.groups[0].items[0] %>
 								<% var prefix = photo.prefix; %>
 								<% var suffix = photo.suffix; %>
 								<% var photoUrl = prefix+'250x250'+suffix; %>
+
 							<% } %>  
 					<li>
 						<time datetime="2014-07-20">
@@ -40,7 +42,7 @@
 							<p class="desc"><%-venue.response.venue.location.address%></p>
 							<% var cords = venue.response.venue.location.lat + "," + venue.response.venue.location.lng %>
 							<a  class="btn btn-primary" href='https://www.google.com/maps/@<%- cords %>'>Find it on the Map</a>
-							<a  class="btn btn-warning" href="/bars/checkin">Test Checkin</a>
+							<a  class="btn btn-warning" href="/bars/checkin?barId=<%-venue.response.venue.id%>">Checkin</a>
 							<!-- <p>Here now <%- venue.response.venue.hereNow.count%> </p> -->
 							<p>Checkins <%- venue.response.venue.likes.count%> </p>
 

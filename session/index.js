@@ -17,6 +17,9 @@ if (process.env.NODE_ENV === 'production') {
     module.exports = session({
         secret: config.sessionSecret,
         resave: false,
-        saveUninitialized: true
+        saveUninitialized: false,
+        store: new MongoStore({
+            mongooseConnection: db.Mongoose.connection
+        })
     });
 }

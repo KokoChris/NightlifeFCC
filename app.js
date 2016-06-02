@@ -37,7 +37,9 @@ app.use('/auth', authRoutes);
 app.use('/api',apiRoutes);
 
 app.get('/', function(req, res) {
-     
+     console.log(req.session)
+     console.log(req.body);
+     console.log(req.query.location);
     res.render('landing', { user: req.user || "" })
     
 });

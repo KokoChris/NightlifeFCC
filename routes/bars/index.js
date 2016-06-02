@@ -19,22 +19,16 @@ let options = {
         venuePhotos: 1
     }
 }
-let options2 = {
-    uri: 'https://api.foursquare.com/v2/venues/explore',
-    qs: {
-        v: 20130815,
-        near: 'Athens',
-        query: 'bar',
-        limit: 10,
-        venuePhotos: 1,
-        //        oauth_token: req.user.token
-    }
-}
+
 
 router.get('/', function(req, res) {
+
+   
+
     options.qs.near = req.query.location;
     req.session.location = req.query.location;
-
+    req.session.cookie.location = req.query.location;
+    console.log(req.session);
 
     request(options, function(error, response, body) {
 
@@ -42,6 +36,7 @@ router.get('/', function(req, res) {
             let parsedBody = JSON.parse(body);
             let venues = parsedBody.response.groups[0].items;
             let venueIds = [];
+           
             for (venue of venues) {
 
                 venueIds.push(venue.venue.id);
@@ -74,11 +69,7 @@ router.get('/', function(req, res) {
                 })
             });
 
-
-
         } else {
-
-
             // res.send('Something went wrong');
         }
     });
@@ -87,26 +78,34 @@ router.get('/', function(req, res) {
 
 
 router.get('/checkin', (req, res) => {
-    let checkinOptions = {
-        url: 'https://api.foursquare.com/v2/venues/4b3a4ffff964a5205f6425e3/like',
+
+    if (req.user) {
+        let checkinOptions = {
+        url: 'https://api.foursquare.com/v2/venues/'+req.query.barId+'/like',
         qs: {
 
-            oauth_token: 'ABXOZX1H54J5GDGCSITOYFGC1NER3YW11XY1RKHSRBWD2X3X',
-            set: 0,
+            oauth_token: req.user.token,
+            set: 1,
             v: Date.now()
         },
         method: "POST"
     }
     request(checkinOptions, (error, response, body) => {
-        console.log(body);
+     
         if (!error && response.statusCode === 200) {
 
             res.redirect("/bars?location=" + req.session.location)
         } else {
-            console.log(JSON.parse(body));
+            
             res.send(error);
         }
     })
+
+    }  else {
+        res.redirect('/bars?location=' + req.session.location);
+    }
+     
+    
 
 })
 

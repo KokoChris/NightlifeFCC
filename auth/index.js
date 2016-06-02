@@ -24,7 +24,7 @@ module.exports = function() {
                 if (result) {
                     done(null, result);
                 } else {
-                    console.log(accessToken)
+                   
                     h.createNewUser(profile,accessToken)
                         .then(newChatUser => done(null, newChatUser))
                         .catch(error => console.log(error));

@@ -14,7 +14,6 @@ router.get('/foursquare',
 router.get('/foursquare/callback',
     passport.authenticate('foursquare', { failureRedirect: '/' }),
     function(req, res) {
-        // Successful authentication, redirect home.
         if (req.session.location) {
 
         	res.redirect('/bars?location=' + req.session.location);
