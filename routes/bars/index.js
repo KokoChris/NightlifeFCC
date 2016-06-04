@@ -9,79 +9,56 @@ const client_id = config.foursquare.clientID;
 const client_secret = config.foursquare.clientSecret;
 
 
-
-
-
-
 router.get('/', decideOptions, (req, res) => {
     let options = req.options;
-    let venueOptions = req.venueOptions;
-
-    request(options, (error, response, body) => {
-
-        if (!error && response.statusCode === 200) {
-            let parsedBody = JSON.parse(body);
-            let venuesList = parsedBody.response.groups[0].items;
-
-            let venueIds = [];
-            for (venue of venuesList) {
-                venueIds.push(venue.venue.id);
-            }
+    var venueOptions = req.venueOptions;
+    rp(options)
+        .then(data => getVenuesUrlList(JSON.parse(data)))
+        .then(urlList => {
             let venues = [];
-            venueIds.forEach((id) => {
-
-                venueOptions.url = 'https://api.foursquare.com/v2/venues/' + id;
-
+            urlList.forEach((url) => {
+                venueOptions.url = url;
                 request(venueOptions, (error, response, body) => {
                     if (!error && response.statusCode === 200) {
                         venues.push(JSON.parse(body));
-                        if (venues.length === venueIds.length) {
+                        if (venues.length === urlList.length) {
                             res.render('bars/index', { venues: venues, location: capitalize(req.query.location) });
 
                         }
                     } else {
-                        res.send(error)
+                        console.log(error);
                     }
 
 
                 })
-            });
+            })
+        })
+        .catch(err => console.log(err))
 
-        } else {
-            res.send(error);
-        }
-    });
-})
+});
 
+router.get('/checkin', checkUser, handleCheckinOptions, (req, res) => {
 
+    rp(req.searchOptions)
+        .then(data => {
+            let parsedBody = JSON.parse(data);
+            if (parsedBody.response.venue.like === true) {
+                req.checkinOptions.qs.set = 0;
+                return rp(req.checkinOptions);
+            } else {
+                req.checkinOptions.qs.set = 1;
+                return rp(req.checkinOptions);
 
-router.get('/checkin', checkUser, (req, res) => {
+            }
 
-    let checkinOptions = {
-            url: 'https://api.foursquare.com/v2/venues/' + req.query.barId + '/like',
-            qs: {
-                oauth_token: req.user.token,
-                set: 1,
-                v: Date.now()
-            },
-            method: "POST"
-        }
-   
-    rp(checkinOptions)
-        .then(res.redirect('/bars/?location=' + req.session.location))
-        .catch((err) => res.send(err));
+        })
+        .then(res.redirect("/bars?location=" + req.session.location))
+        .catch(err => res.send(err.message));
+
 
 
 });
 
-router.get('/test', (req, res) => {
-
-    rp(requestOptions.exploreUserless)
-        .then((papa) => res.send(papa))
-        .catch((err) => res.send(err));
-
-
-})
 
 
 function capitalize(word) {
@@ -89,8 +66,8 @@ function capitalize(word) {
 }
 
 function decideOptions(req, res, next) {
-    var options;
-    var venueOptions;
+    let options;
+    let venueOptions;
     if (req.user) {
         options = requestOptions.exploreWithUser;
         options.qs.oauth_token = req.user.token;
@@ -120,5 +97,35 @@ function checkUser(req, res, next) {
         res.redirect("/bars?location=" + req.session.location)
 
     }
+}
+
+function handleCheckinOptions(req, res, next) {
+
+    req.searchOptions = requestOptions.venueWithUser;
+    req.searchOptions.qs.oauth_token = req.user.token;
+    req.searchOptions.url = 'https://api.foursquare.com/v2/venues/' + req.query.barId;
+    req.checkinOptions = requestOptions.checkinOptions;
+    req.checkinOptions.url = 'https://api.foursquare.com/v2/venues/' + req.query.barId + '/like';
+    req.checkinOptions.qs.oauth_token = req.user.token;
+    req.checkinOptions.qs.set = 1;
+
+    next();
+}
+
+
+let getVenuesUrlList = (parsedBody) => {
+
+    return new Promise((resolve, reject) => {
+        let venuesList = parsedBody.response.groups[0].items;
+
+        let venuesUrlList = []
+        for (let venue of venuesList) {
+            let url = 'https://api.foursquare.com/v2/venues/' + venue.venue.id;
+
+            venuesUrlList.push(url);
+        }
+
+        resolve(venuesUrlList);
+    })
 }
 module.exports = router;

@@ -29,7 +29,7 @@ let exploreWithUser = {
 }
 
 let venueWithUser = {
-    url: 'https://api.foursquare.com/v2/venues/' + this.id,
+    url: 'https://api.foursquare.com/v2/venues/',
     qs: {
 
         oauth_token: '',
@@ -38,7 +38,7 @@ let venueWithUser = {
 }
 
 let venueWithoutUser = {
-    url: 'https://api.foursquare.com/v2/venues/' + this.id,
+    url: 'https://api.foursquare.com/v2/venues/',
     qs: {
         client_id: client_id,
         client_secret: client_secret,
@@ -46,9 +46,21 @@ let venueWithoutUser = {
     }
 
 }
+
+let checkinOptions = {
+    url: 'https://api.foursquare.com/v2/venues/',
+    qs: {
+        oauth_token: '',
+        set: 0,
+        v: Date.now(),
+    },
+    method: 'POST'
+}
+
 module.exports = {
     exploreUserless,
     exploreWithUser,
     venueWithUser,
-    venueWithoutUser
+    venueWithoutUser,
+    checkinOptions
 }
