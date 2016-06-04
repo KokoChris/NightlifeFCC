@@ -4,8 +4,9 @@ const passport = require('passport');
 
 
 router.get('/logout', (req, res, next) => {
-	 req.logout();
-     res.redirect('/');
+    req.flash("success", "Bye Bye")
+    req.logout();
+    res.redirect('/');
 })
 
 router.get('/foursquare',
@@ -14,12 +15,13 @@ router.get('/foursquare',
 router.get('/foursquare/callback',
     passport.authenticate('foursquare', { failureRedirect: '/' }),
     function(req, res) {
-        if (req.session.location) {
+        req.flash("success", "Welcome " + req.user.fullName)
 
-        	res.redirect('/bars?location=' + req.session.location);
+        if (req.session.location) {
+            res.redirect('/bars?location=' + req.session.location);
         } else {
-        	
-        	res.redirect('/');
+
+            res.redirect('/');
 
         }
     })

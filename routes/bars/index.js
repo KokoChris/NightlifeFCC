@@ -22,7 +22,7 @@ router.get('/', decideOptions, (req, res) => {
                     if (!error && response.statusCode === 200) {
                         venues.push(JSON.parse(body));
                         if (venues.length === urlList.length) {
-                            res.render('bars/index', { venues: venues, location: capitalize(req.query.location) });
+                            res.render('bars/index', { venues: venues, location: capitalize(req.query.location)});
 
                         }
                     } else {
@@ -44,22 +44,27 @@ router.get('/checkin', checkUser, handleCheckinOptions, (req, res) => {
             let parsedBody = JSON.parse(data);
             if (parsedBody.response.venue.like === true) {
                 req.checkinOptions.qs.set = 0;
-                return rp(req.checkinOptions);
+                return rp(req.checkinOptions),{checkin:0};
             } else {
                 req.checkinOptions.qs.set = 1;
-                return rp(req.checkinOptions);
+                return rp(req.checkinOptions),{checkin:1};
 
             }
 
         })
-        .then(res.redirect("/bars?location=" + req.session.location))
+        .then( stuff => {
+            if (stuff.checkin == 1) {
+                req.flash("success","You checked in!!!")
+            } else  if (stuff.checkin ==0) {
+                req.flash("warning","You checked out!!!,Are you sure?")
+            }
+            res.redirect("/bars?location=" + req.session.location)
+        })
         .catch(err => res.send(err.message));
 
 
 
 });
-
-
 
 function capitalize(word) {
     return word[0].toUpperCase() + word.slice(1);
@@ -94,6 +99,9 @@ function checkUser(req, res, next) {
     if (req.user) {
         next();
     } else {
+        console.log('yolo')
+        console.log(res.locals)
+        req.flash('error','Please Login in order to checkin!')
         res.redirect("/bars?location=" + req.session.location)
 
     }
