@@ -7,6 +7,9 @@
     "test": "mocha test.js",
     "start": "node app.js"
   },
+  "engines": {
+    "node": "6.2.0"
+  }
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KokoChris/VoteApp.git"
