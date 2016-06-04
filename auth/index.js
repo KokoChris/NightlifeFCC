@@ -17,7 +17,7 @@ module.exports = function() {
 
 
 
-    let authProcessor = function(accessToken, refreshToken, profile, done) {
+    let authProcessor = (accessToken, refreshToken, profile, done) => {
 
         h.findOne(profile.id)
             .then(function(result) {

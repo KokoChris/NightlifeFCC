@@ -14,7 +14,7 @@ router.get('/foursquare',
 
 router.get('/foursquare/callback',
     passport.authenticate('foursquare', { failureRedirect: '/' }),
-    function(req, res) {
+    (req, res) => {
         req.flash("success", "Welcome " + req.user.fullName)
 
         if (req.session.location) {

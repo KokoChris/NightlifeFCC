@@ -99,8 +99,6 @@ function checkUser(req, res, next) {
     if (req.user) {
         next();
     } else {
-        console.log('yolo')
-        console.log(res.locals)
         req.flash('error','Please Login in order to checkin!')
         res.redirect("/bars?location=" + req.session.location)
 
