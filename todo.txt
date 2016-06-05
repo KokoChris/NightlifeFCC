@@ -1,0 +1,3 @@
+credit to foursquare(a button or a banner)
+fix google maps location
+tests
